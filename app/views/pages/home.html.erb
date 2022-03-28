@@ -1,0 +1,30 @@
+<div class= "display-group">
+    <div class="grid-container">
+        <div class="grid-item">
+            <h3> Bienvenido a Page Name: </h3>
+        </div>
+        <br>
+        <%= form_with(scope: :session, url: "#", local: true) do |form| %>
+
+            <div id="search_information" class="form-group"> 
+                <div> 
+                    <label for="actions">Seleccionar acción</label>
+                    <select name="actions" id="actions">
+                        <option value="action1">Acción 1</option>
+                        <option value="action2">Acción 2</option>
+                        <option value="action3">Acción 3</option>
+                        <option value="action4">Acción 4</option>
+                    </select>   
+                </div>
+          
+              <div>
+                <p>
+                  <%= form.text_field :requester_email %>
+                </p>
+              </div>
+            <div>
+              <%= form.submit "Buscar" %>
+            </div>
+        <% end %>
+    </div>
+</div>
