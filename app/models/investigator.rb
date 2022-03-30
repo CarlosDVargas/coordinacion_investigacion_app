@@ -1,0 +1,2 @@
+class Investigator < ApplicationRecord
+end

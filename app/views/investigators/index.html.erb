@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Investigadores</h1>
+
+<div id="investigators">
+  <div class="row">
+    <div class="col-9">  
+      <%= render partial: 'investigator_list', locals: { investigators: @investigators} %>
+    </div>
+  </div>
+</div>
+
+<%= link_to "Nuevo investigador", new_investigator_path %>

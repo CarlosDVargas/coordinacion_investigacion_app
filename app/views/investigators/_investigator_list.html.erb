@@ -1,0 +1,24 @@
+<table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Cédula</th>
+              <th scope="col">Nombre Completo</th>
+              <th scope="col">Correo</th>
+              <th scope="col">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% investigators.each do |investigator| %>
+              <tr>
+                <td><%= investigator.idCard %></td>
+                <td><%= investigator.name + " " + investigator.lastname %></td>
+                <td><%= investigator.email %></td>
+                <td><%= link_to "Mostrar investigator", investigator,
+                                class: "btn btn-sm btn-info" %> | 
+                    <%= link_to "Editar investigator", edit_investigator_path(investigator), class: "btn btn-sm btn-success" %> | 
+                    <%= link_to "Eliminar investigator", investigator, data: { turbo_method: :delete, turbo_confirm: "¿Eliminar este registro?" },
+                                                               class: "btn btn-sm btn-danger" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+</table>

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @investigator %>
+
+<div>
+  <%= link_to "Editar investigador", edit_investigator_path(@investigator) %> |
+  <%= link_to "Regresar a la lista", investigators_path %>
+
+  <%= button_to "Eliminar investigador", @investigator, method: :delete %>
+</div>

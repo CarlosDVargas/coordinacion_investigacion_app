@@ -1,0 +1,37 @@
+<%= form_with(model: investigator) do |form| %>
+  <% if investigator.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(investigator.errors.count, "error") %> prohibited this investigator from being saved:</h2>
+
+      <ul>
+        <% investigator.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label "Cédula", style: "display: block" %>
+    <%= form.text_field :idCard %>
+  </div>
+
+  <div>
+    <%= form.label "Nombre", style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label "Apellido", style: "display: block" %>
+    <%= form.text_field :lastname %>
+  </div>
+
+  <div>
+    <%= form.label "Correo electrónico", style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.submit(investigator.new_record? ? "Registrar" : "Actualizar", class: "btn btn-sm btn-success") %>
+  </div>
+<% end %>
