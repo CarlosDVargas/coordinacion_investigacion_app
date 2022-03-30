@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Proyectos</h1>
+
+<div id="projects">
+  <div class="row">
+    <div class="col-9">  
+      <%= render partial: 'project_list', locals: { projects: @projects} %>
+    </div>
+  </div>
+</div>
+
+<%= link_to "Nuevo proyecto", new_project_path %>
