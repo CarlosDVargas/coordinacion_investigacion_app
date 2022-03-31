@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_30_231151) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_31_000302) do
   create_table "investigators", force: :cascade do |t|
     t.string "idCard"
     t.string "name"
@@ -18,6 +18,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_30_231151) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "project_investigators", force: :cascade do |t|
+    t.integer "project_id"
+    t.integer "investigator_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "role", default: 1
   end
 
   create_table "projects", force: :cascade do |t|
