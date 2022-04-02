@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   root 'pages#home'
+
+  post 'register_project_investigators', action: :register_investigators, controller: 'projects'
 end

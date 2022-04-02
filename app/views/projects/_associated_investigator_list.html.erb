@@ -1,0 +1,18 @@
+<table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Nombre Completo</th>
+              <th scope="col">Correo</th>
+              <th scope="col">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% investigators.each do |investigator| %>
+              <tr>
+                <td><%= investigator.name + " " + investigator.lastname %></td>
+                <td><%= investigator.email %></td>
+                <td><input class: "btn btn-sm btn-danger" name="removeInvestigator" value="Eliminar investigador" type="button" />
+              </tr>
+            <% end %>
+          </tbody>
+</table>

@@ -13,6 +13,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
+    @investigators = []
   end
 
   # GET /projects/1/edit
@@ -55,6 +56,22 @@ class ProjectsController < ApplicationController
       format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def register_project_investigator
+    byebug
+    @investigators = []
+
+    if params[:value]
+      if params[:value][0]
+      end
+
+      
+    end
+
+
+
+    render partial: "projects/associated_investigator_list", locals: { investigators: @investigators }
   end
 
   private

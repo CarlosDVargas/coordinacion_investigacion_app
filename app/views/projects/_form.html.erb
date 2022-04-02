@@ -12,15 +12,35 @@
   <% end %>
 
   <div>
-    <%= form.label :code, style: "display: block" %>
+    <%= form.label "Código", style: "display: block" %>
     <%= form.number_field :code %>
   </div>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label "Nombre", style: "display: block" %>
     <%= form.text_field :name %>
   </div>
 
+  <div>
+    <%= form.label "Correo investigador principal", style: "display: block" %>
+    <%= form.text_field :main_investigator_email %>
+  </div>
+
+  <div data-controller="add-investigator" data-table-filter-url="<%= register_project_investigators_path %>">
+    <label for="associated_investigator_email" style="display: block">Correos investigadores asociados</label>
+    <input id="associated_investigator_email" name="associated_investigator_email" type="text_field" />
+    <input name="addInvestigator" value="Agregar investigador" type="button" data-action="add-investigator#change" />
+    <input name="filter" value="outsourcing" type="checkbox" data-action="add-investigator#change" />Contratación Externa
+  
+    <br>
+    <div id="investigators">
+      <div class="row">
+        <div class="col-9" data-table-filter-target="elements">  
+          <%= render partial: 'associated_investigator_list', locals: { investigators: @investigators} %>
+        </div>
+      </div>
+    </div>
+  </div>
   <div>
     <%= form.submit(project.new_record? ? "Registrar" : "Actualizar", class: "btn btn-sm btn-success") %>
   </div>
