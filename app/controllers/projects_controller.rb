@@ -60,17 +60,30 @@ class ProjectsController < ApplicationController
 
   def register_project_investigators
     @investigators = []
-    if params[:investigator]
-      if params[:investigators].size > 0
-        (params[:investigators]).each do |email_added|
-          @investigators += Investigator.where(email: email_added)
+    if !params[:delete]
+      if params[:investigator]
+        if params[:investigators].size > 0
+          (params[:investigators]).each do |email_added|
+            @investigators += Investigator.where(email: email_added)
+          end
+        end
+
+        if !Investigator.where(email: params[:investigator][0]).empty? && verify_investigator_added(params[:investigator][0], @investigators)
+          @investigators += Investigator.where(email: params[:investigator][0])
         end
       end
 
-      if !Investigator.where(email: params[:investigator][0]).empty? && verify_investigator_added(params[:investigator][0], @investigators)
-        @investigators += Investigator.where(email: params[:investigator][0])
+    else
+      if params[:investigator]
+        if params[:investigators].size > 0
+          (params[:investigators]).each do |email_added|
+            if email_added != params[:investigator][0]
+              @investigators += Investigator.where(email: email_added)
+            end
+          end
+        end
+
       end
-     
     end
 
     render partial: "projects/associated_investigator_list", locals: { investigators: @investigators }

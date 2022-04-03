@@ -6,7 +6,6 @@ export default class extends Controller {
   change(event) {
     let added_investigators = []
     if (document.getElementsByTagName("tr").length > 1){
-        console.log(document.getElementsByTagName("td")[1].innerHTML)
         for (var i = 1; i < document.getElementsByTagName("tr").length; i++){
             added_investigators.push(document.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].innerHTML)
         }
@@ -14,7 +13,7 @@ export default class extends Controller {
         
     fetch(this.data.get("url"), { 
       method: 'POST', 
-      body: JSON.stringify( { investigator: [document.getElementById("associated_investigator_email").value], investigators: added_investigators }),
+      body: JSON.stringify( { investigator: [document.getElementById("associated_investigator_email").value], investigators: added_investigators, delete: false }),
       credentials: "include",
       dataType: 'script',
       headers: {
@@ -29,10 +28,18 @@ export default class extends Controller {
   }
 
   delete(event) {
-    console.log(this.data)
+    console.log(event.target.parentNode.parentNode.getElementsByTagName("td")[1].innerHTML)
+
+    let added_investigators = []
+    if (document.getElementsByTagName("tr").length > 1){
+        for (var i = 1; i < document.getElementsByTagName("tr").length; i++){
+            added_investigators.push(document.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].innerHTML)
+        }
+    }
+
     fetch(this.data.get("url"), { 
       method: 'POST', 
-      body: JSON.stringify( { investigator: [document.getElementById("associated_investigator_email").value] }),
+      body: JSON.stringify( { investigator: [event.target.parentNode.parentNode.getElementsByTagName("td")[1].innerHTML], investigators: added_investigators, delete: true }),
       credentials: "include",
       dataType: 'script',
       headers: {
