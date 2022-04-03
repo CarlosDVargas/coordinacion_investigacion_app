@@ -53,23 +53,25 @@ class ProjectsController < ApplicationController
     @project.destroy
 
     respond_to do |format|
-      format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }
+      format.html { redirect_to projects_url, notice: "Se ha eliminado el proyecto." }
       format.json { head :no_content }
     end
   end
 
-  def register_project_investigator
-    byebug
+  def register_project_investigators
     @investigators = []
-
-    if params[:value]
-      if params[:value][0]
+    if params[:investigator]
+      if params[:investigators].size > 0
+        (params[:investigators]).each do |email_added|
+          @investigators += Investigator.where(email: email_added)
+        end
       end
 
-      
+      if !Investigator.where(email: params[:investigator][0]).empty? && verify_investigator_added(params[:investigator][0], @investigators)
+        @investigators += Investigator.where(email: params[:investigator][0])
+      end
+     
     end
-
-
 
     render partial: "projects/associated_investigator_list", locals: { investigators: @investigators }
   end
@@ -83,5 +85,14 @@ class ProjectsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def project_params
       params.require(:project).permit(:code, :name)
+    end
+
+    def verify_investigator_added(email_received, investigators)
+      (investigators).each do |investigator_added|
+        if investigator_added.email == email_received
+          return false
+        end
+      end
+      return true
     end
 end

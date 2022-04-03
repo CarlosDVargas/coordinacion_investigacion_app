@@ -1,4 +1,4 @@
-<table class="table table-bordered table-hover">
+<table id="associated_investigator_table" class="table table-bordered table-hover">
           <thead>
             <tr>
               <th scope="col">Nombre Completo</th>
@@ -11,7 +11,7 @@
               <tr>
                 <td><%= investigator.name + " " + investigator.lastname %></td>
                 <td><%= investigator.email %></td>
-                <td><input class: "btn btn-sm btn-danger" name="removeInvestigator" value="Eliminar investigador" type="button" />
+                <td><a class="btn btn-sm btn-danger" name="removeInvestigator" href="#" data-action="add-investigator#delete">Eliminar investigador</a></td>
               </tr>
             <% end %>
           </tbody>

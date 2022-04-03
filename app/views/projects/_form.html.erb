@@ -21,21 +21,18 @@
     <%= form.text_field :name %>
   </div>
 
-  <div>
-    <%= form.label "Correo investigador principal", style: "display: block" %>
-    <%= form.text_field :main_investigator_email %>
-  </div>
+  <label for="main_investigator_email" style="display: block">Correos investigador principal</label>
+  <input id="main_investigator_email" name="main_investigator_email" type="text_field" />
 
-  <div data-controller="add-investigator" data-table-filter-url="<%= register_project_investigators_path %>">
+  <div data-controller="add-investigator" data-add-investigator-url="<%= register_project_investigators_path(@investigators) %>">
     <label for="associated_investigator_email" style="display: block">Correos investigadores asociados</label>
     <input id="associated_investigator_email" name="associated_investigator_email" type="text_field" />
-    <input name="addInvestigator" value="Agregar investigador" type="button" data-action="add-investigator#change" />
-    <input name="filter" value="outsourcing" type="checkbox" data-action="add-investigator#change" />Contratación Externa
+    <a class="btn btn-sm btn-info" name="addInvestigator" href="#" data-action="add-investigator#change">Agregar investigador</a>
   
     <br>
     <div id="investigators">
       <div class="row">
-        <div class="col-9" data-table-filter-target="elements">  
+        <div class="col-9" data-add-investigator-target="elements">  
           <%= render partial: 'associated_investigator_list', locals: { investigators: @investigators} %>
         </div>
       </div>

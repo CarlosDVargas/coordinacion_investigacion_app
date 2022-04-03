@@ -8,5 +8,5 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
-  post 'register_project_investigators', action: :register_investigators, controller: 'projects'
+  post 'register_project_investigators', action: :register_project_investigators, controller: 'projects'
 end
