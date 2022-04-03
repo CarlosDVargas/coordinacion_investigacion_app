@@ -83,3 +83,5 @@ group :test do
   gem "webdrivers"
 end
 
+# Use Devise for user authentication and authorization
+gem "devise", "~> 4.8"
