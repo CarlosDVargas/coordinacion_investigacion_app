@@ -10,9 +10,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    byebug
+    @user = User.new()
+    @user.firstname = params[:user][:firstname]
+    @user.lastname = params[:user][:lastname]
+    @user.email = params[:user][:email]
+    @user.id_number = params[:user][:id_number]
+    @user.phone_number = params[:user][:phone_number]
+    @user.email = params[:user][:email]
+    @user.password = "Con#{@user.id_number}"
+    @user.role = @user.defined_enums["role"].key(params[:user][:role])
+    if @user.save
+      redirect_to root_path
+    else
+      redirect_to new_user_registration_path(@user)
+    end
+  end
 
   # GET /resource/edit
   # def edit

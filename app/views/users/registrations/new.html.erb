@@ -1,29 +1,47 @@
-<h2>Sign up</h2>
+<div class="container">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+  <h2>Añadir Usuario</h2>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "users/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+    <div class="field">
+      <%= f.label "Nombre" %><br />
+      <%= f.text_field :firstname, autofocus: true, autocomplete: "firstname" %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+    <div class="field">
+      <%= f.label "Apellidos" %><br />
+      <%= f.text_field :lastname, autofocus: true, autocomplete: "lastname" %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
 
-<%= render "users/shared/links" %>
+    <div class="field">
+      <%= f.label "Número de cédula" %><br />
+      <%= f.text_field :id_number, autofocus: true, autocomplete: "id_number" %>
+    </div>
+
+    <div class="field">
+      <%= f.label "Número de teléfono" %><br />
+      <%= f.text_field :phone_number, autofocus: true, autocomplete: "phone_number" %>
+    </div>
+
+    <div class="field">
+      <%= f.label "Cargo" %><br />
+      <%= f.select :role, options_for_select(@user.defined_enums["role"].values) %>
+    </div>
+
+    <br>
+
+    <div class="actions">
+      <%= f.submit "Crear usuario", class:"btn btn-primary"%>
+    </div>
+  <% end %>
+  
+</div>
+
+
