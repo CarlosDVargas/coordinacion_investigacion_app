@@ -52,7 +52,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       @users = User.all
     end
-    @user
   end
 
   # GET /resource/edit
