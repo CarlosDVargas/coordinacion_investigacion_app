@@ -30,6 +30,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def index
+    @user = User.new
+    @users = User.all
+  end
+
   # GET /resource/edit
   # def edit
   #   super

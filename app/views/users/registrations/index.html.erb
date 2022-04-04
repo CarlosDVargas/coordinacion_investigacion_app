@@ -1,0 +1,36 @@
+<div class="container">
+  
+  <div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Cédula</th>
+          <th>Nombre Completo</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Cargo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.id_number %></td>
+            <td><%= user.firstname %> <%= user.lastname %></td>
+            <td><%= user.email %></td>
+            <td><%= user.phone_number %></td>
+            <td><%= @user.defined_enums["role"][user.role] %></td>
+            <td>
+              
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  
+
+  <div class="actions">
+    <%= link_to "Añadir usuario", new_user_registration_path, class: "btn btn-primary" %>
+    </div>
+</div>
