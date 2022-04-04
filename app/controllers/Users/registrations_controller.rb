@@ -13,7 +13,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    byebug
     @user = User.new()
     @user.firstname = params[:user][:firstname]
     @user.lastname = params[:user][:lastname]
@@ -32,7 +31,28 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def index
     @user = User.new
-    @users = User.all
+    if !params[:firstname].blank? || !params[:lastname].blank? || !params[:email].blank? || !params[:id_number].blank?
+      @users = []
+      if !params[:firstname].blank?
+        users_by_first_name = User.where("firstname like ?", "%" + params[:firstname] + "%")
+        @users = @users.concat(users_by_first_name) if !users_by_first_name.empty?
+      end
+      if !params[:lastname].blank?
+        users_by_last_name = User.where("lastname like ?", "%" + params[:lastname] + "%")
+        @users = @users + users_by_last_name if !users_by_last_name.empty?
+      end
+      if !params[:email].blank?
+        users_by_email = User.where("email like ?", "%" + params[:email] + "%")
+        @users = @users.concat(users_by_email) if !users_by_email.empty?
+      end
+      if !params[:id_number].blank?
+        users_by_id_number = User.where("id_number like ?", "%" + params[:id_number] + "%")
+        @users = @users.concat(users_by_id_number) if !users_by_id_number.empty?
+      end
+    else
+      @users = User.all
+    end
+    @user
   end
 
   # GET /resource/edit

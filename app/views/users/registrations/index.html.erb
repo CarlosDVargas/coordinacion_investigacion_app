@@ -1,5 +1,34 @@
 <div class="container">
-  
+  <br>
+  <h2>Buscar usuarios</h2>
+  <br>
+
+  <div class="container">
+    <%= form_tag(users_path, method: :get) do %>
+      <div class="field">
+        <%= label_tag :firstname, "Nombre:" %> <br>
+        <%= text_field_tag :firstname, params[:firstname], autofocus: true, autocomplete: "firstname" %>
+      </div>
+      <br>
+      <div class="field">
+        <%= label_tag :lastname, "Apellidos:" %> <br>
+        <%= text_field_tag :lastname, params[:lastname], autofocus: true, autocomplete: "lastname" %>
+      </div>
+      <br>
+      <div class="field">
+        <%= label_tag :email, "Correo electrónico:" %> <br>
+        <%= email_field_tag :email, params[:email], autofocus: true, autocomplete: "email" %>
+      </div>
+      <br>
+      <div class="field">
+        <%= label_tag :id_number, "Número de cédula:" %> <br>
+        <%= text_field_tag :id_number, params[:id_number], autofocus: true, autocomplete: "id_number" %>
+      </div>
+      <br>
+      <%= submit_tag "Buscar", name: nil, class: "btn btn-primary btn-sm" %>
+    <% end %>
+  </div>
+
   <div>
     <table class="table table-hover">
       <thead>
@@ -32,5 +61,6 @@
 
   <div class="actions">
     <%= link_to "Añadir usuario", new_user_registration_path, class: "btn btn-primary" %>
-    </div>
+  </div>
+  
 </div>
