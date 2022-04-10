@@ -6,13 +6,8 @@
               <th scope="col">Acción</th>
             </tr>
           </thead>
-          <tbody>
-            <% investigators.each do |investigator| %>
-              <tr>
-                <td><%= investigator.name + " " + investigator.lastname %></td>
-                <td><%= investigator.email %></td>
-                <td><a class="btn btn-sm btn-danger" name="removeInvestigator" href="#" data-action="add-investigator#delete">Eliminar investigador</a></td>
-              </tr>
+          <tbody id="investigators_body">
+            <%= f.fields_for :project_investigators do |associated| %>
             <% end %>
           </tbody>
 </table>

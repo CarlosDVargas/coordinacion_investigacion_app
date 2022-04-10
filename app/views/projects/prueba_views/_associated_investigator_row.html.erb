@@ -1,0 +1,10 @@
+<% if investigator %>
+    <tr class="investigator-row">
+        <%= form.hidden_field :_destroy %>
+        <%= form.hidden_field :investigator_id, value: investigator.id %>
+        <%= form.hidden_field :project_id, value: project.id %>
+        <td><%= investigator.name + " " + investigator.lastname %></td>
+        <td><%= investigator.email %></td>
+        <td><%= link_to "Eliminar", "#", class: "btn btn-sm btn-danger", data: { action: "click->add-investigator#remove_association" } %></td>
+    </tr>
+<% end %>

@@ -1,61 +1,48 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "elements" ]
+  static targets = ["template", "add_item"];
 
-  change(event) {
-    let added_investigators = []
-    if (document.getElementsByTagName("tr").length > 1){
-        for (var i = 1; i < document.getElementsByTagName("tr").length; i++){
-            added_investigators.push(document.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].innerHTML)
-        }
+  add_association(event) {
+    event.preventDefault();
+    if (document.getElementById("associated_investigator_email").value != ""){
+      fetch(this.data.get("url"))
+        .then((resp) => resp.json())
+        .then(function(result) {
+          console.log(result)
+          let investigators = result.data;
+
+          console.log(investigators)
+
+          for (var i = 0; i < investigators.length; i++){
+            if (investigators[i].email == document.getElementById("associated_investigator_email").value){
+              document.getElementById("row_template").content.querySelectorAll("td")[0].innerHTML = investigators[i].name;
+              document.getElementById("row_template").content.querySelectorAll("td")[1].innerHTML = investigators[i].email;
+              document.getElementById("row_template").content.querySelectorAll("input")[1].value = investigators[i].id;
+              console.log(investigators[i]);
+              break;
+            }
+          }
+
+          var content = document.getElementById("row_template").innerHTML.replace(/TEMPLATE_RECORD/g, Math.floor(Math.random() * 20));
+          document.getElementById("investigators_body").insertAdjacentHTML('afterbegin', content);
+        })
+      .catch(function(error) {
+        console.log(error);
+      });
     }
-        
-    fetch(this.data.get("url"), { 
-      method: 'POST', 
-      body: JSON.stringify( { investigator: [document.getElementById("associated_investigator_email").value], investigators: added_investigators, delete: false }),
-      credentials: "include",
-      dataType: 'script',
-      headers: {
-        "X-CSRF-Token": getMetaValue("csrf-token"),
-        "Content-Type": "application/json"
-      },
-    })
-      .then(response => response.text())
-      .then(html => {
-        this.elementsTarget.innerHTML = html
-      })
+    
+
+    
   }
 
-  delete(event) {
-    console.log(event.target.parentNode.parentNode.getElementsByTagName("td")[1].innerHTML)
 
-    let added_investigators = []
-    if (document.getElementsByTagName("tr").length > 1){
-        for (var i = 1; i < document.getElementsByTagName("tr").length; i++){
-            added_investigators.push(document.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].innerHTML)
-        }
-    }
-
-    fetch(this.data.get("url"), { 
-      method: 'POST', 
-      body: JSON.stringify( { investigator: [event.target.parentNode.parentNode.getElementsByTagName("td")[1].innerHTML], investigators: added_investigators, delete: true }),
-      credentials: "include",
-      dataType: 'script',
-      headers: {
-        "X-CSRF-Token": getMetaValue("csrf-token"),
-        "Content-Type": "application/json"
-      },
-    })
-      .then(response => response.text())
-      .then(html => {
-        this.elementsTarget.innerHTML = html
-      })
+  remove_association(event) {
+    event.preventDefault();
+    let item = event.target.closest(".investigator-row");
+    item.querySelector("input[name*='_destroy']").value = 1;
+    item.style.display = 'none';
   }
 
-}
 
-function getMetaValue(name) {
-  const element = document.head.querySelector(`meta[name="${name}"]`)
-  return element.getAttribute("content")
 }

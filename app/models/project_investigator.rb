@@ -9,4 +9,6 @@ class ProjectInvestigator < ApplicationRecord
     def set_default_role
         self.role ||= :associated
     end
+
+    attr_accessor :investigator_id, :project_id
 end

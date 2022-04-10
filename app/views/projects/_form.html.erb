@@ -24,16 +24,27 @@
   <label for="main_investigator_email" style="display: block">Correos investigador principal</label>
   <input id="main_investigator_email" name="main_investigator_email" type="text_field" />
 
-  <div data-controller="add-investigator" data-add-investigator-url="<%= register_project_investigators_path(@investigators) %>">
+  <div data-controller="add-investigator" data-add-investigator-url="<%= get_project_investigators_path %>">
     <label for="associated_investigator_email" style="display: block">Correos investigadores asociados</label>
     <input id="associated_investigator_email" name="associated_investigator_email" type="text_field" />
-    <a class="btn btn-sm btn-info" name="addInvestigator" href="#" data-action="add-investigator#change">Agregar investigador</a>
+    <div data-add-investigator-target="add_item">
+      <%= link_to "Agregar investigador", "#", class: "btn btn-sm btn-info", data: { action: "add-investigator#add_association" } %>
+    </div>
   
+
+    <h4>Investigadores asociados:</h4>
+
+    <template id="row_template" data-add-investigator-target="template"> 
+        <%= form.fields_for :project_investigators, ProjectInvestigator.new, child_index: "TEMPLATE_RECORD" do |associated| %>
+            <%= render "projects/prueba_views/associated_investigator_row", form: associated, project: project, investigator: Investigator.first %>
+        <% end %>
+    </template>
+    
     <br>
     <div id="investigators">
       <div class="row">
-        <div class="col-9" data-add-investigator-target="elements">  
-          <%= render partial: 'associated_investigator_list', locals: { investigators: @investigators} %>
+        <div class="col-9">
+          <%= render 'associated_investigator_list', f: form, project: project, investigators: @investigators %>
         </div>
       </div>
     </div>
@@ -41,4 +52,6 @@
   <div>
     <%= form.submit(project.new_record? ? "Registrar" : "Actualizar", class: "btn btn-sm btn-success") %>
   </div>
+
+  
 <% end %>

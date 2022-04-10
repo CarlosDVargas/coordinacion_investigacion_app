@@ -16,5 +16,5 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
-  post 'register_project_investigators', action: :register_project_investigators, controller: 'projects'
+  get 'get_project_investigators', action: :get_project_investigators, controller: 'projects'
 end
