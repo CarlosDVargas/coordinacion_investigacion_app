@@ -20,6 +20,18 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     @project.project_investigators.build
+    @main_investigator_email = nil
+    @investigators = []
+
+    if @project.id
+      @main_investigator_email = ProjectInvestigator.where(project_id: @project.id, role: 0).first.investigator.email
+
+      (ProjectInvestigator.all).each do |associated|
+        if associated.project.id == @project.id && associated.role != "main"
+          @investigators.push(associated.investigator)
+        end
+      end
+    end
   end
 
   # POST /projects or /projects.json
@@ -30,7 +42,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.save
         (project_params[:project_investigators_attributes].values).each do |associated|
-          if associated["_destroy"] != 1
+          if associated["_destroy"] != "1"
             ProjectInvestigator.create(project: @project, investigator: Investigator.find(associated[:investigator_id]))
             
           end
@@ -52,7 +64,39 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
     respond_to do |format|
-      if @project.update(project_params)
+      if @project.update(code: project_params[:code], name: project_params[:name])
+        if project_params[:project_investigators_attributes]
+          (project_params[:project_investigators_attributes].values).each do |associated|
+            if associated["_destroy"] != "1"
+              @investigator_associated = ProjectInvestigator.where(project: @project, investigator: Investigator.find(associated[:investigator_id]))
+              if @investigator_associated.length == 0
+                ProjectInvestigator.create(project: @project, investigator: Investigator.find(associated[:investigator_id]))
+              end
+            end
+          end
+
+          (project_params[:project_investigators_attributes].values).each do |associated|
+            if associated["_destroy"] == "1"
+              @investigator_associated = ProjectInvestigator.where(project: @project, investigator: Investigator.find(associated[:investigator_id])).first
+              if @investigator_associated
+                @investigator_associated.destroy
+              end
+            end
+          end
+          
+
+        end
+    
+        if params[:main_investigator_email]
+          @main_investigator = ProjectInvestigator.where(project: @project, investigator: Investigator.where(email: params[:main_investigator_email]).first, role: 0).first
+          if !@main_investigator
+            @past_main_investigator = ProjectInvestigator.where(project: @project, role: 0).first
+            @past_main_investigator.destroy
+
+            ProjectInvestigator.create(project: @project, investigator: Investigator.where(email: params[:main_investigator_email]).first, role: 0)
+          end
+        end
+
         format.html { redirect_to project_url(@project), notice: "Project was successfully updated." }
         format.json { render :show, status: :ok, location: @project }
       else

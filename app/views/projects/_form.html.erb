@@ -22,7 +22,7 @@
   </div>
 
   <label for="main_investigator_email" style="display: block">Correos investigador principal</label>
-  <input id="main_investigator_email" name="main_investigator_email" type="text_field" />
+  <input id="main_investigator_email" name="main_investigator_email" type="text_field" value="<%= @main_investigator_email %>" />
 
   <div data-controller="add-investigator" data-add-investigator-url="<%= get_project_investigators_path %>">
     <label for="associated_investigator_email" style="display: block">Correos investigadores asociados</label>
@@ -36,7 +36,7 @@
 
     <template id="row_template" data-add-investigator-target="template"> 
         <%= form.fields_for :project_investigators, ProjectInvestigator.new, child_index: "TEMPLATE_RECORD" do |associated| %>
-            <%= render "projects/prueba_views/associated_investigator_row", form: associated, project: project, investigator: Investigator.first %>
+            <%= render "projects/project_views/associated_investigator_row", form: associated, project: project, investigator: Investigator.first %>
         <% end %>
     </template>
     

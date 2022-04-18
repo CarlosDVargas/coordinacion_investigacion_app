@@ -7,7 +7,16 @@
             </tr>
           </thead>
           <tbody id="investigators_body">
-            <%= f.fields_for :project_investigators do |associated| %>
-            <% end %>
+            
+              <% if investigators && investigators.length != 0 %>
+                <% (investigators).each do |associated_investigator| %>
+                  <%= f.fields_for :project_investigators, ProjectInvestigator.new do |associated| %>
+                    <%= render "projects/project_views/associated_investigator_row", form: associated, project: project, investigator: (associated_investigator ? associated_investigator : Investigator.first) %>
+                  
+                  <% end %>
+                <% end %>
+              <% end %>
+              
+            
           </tbody>
 </table>
