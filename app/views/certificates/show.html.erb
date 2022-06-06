@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @certificate %>
+
+<div>
+  <%= link_to "Edit this certificate", edit_certificate_path(@certificate) %> |
+  <%= link_to "Back to certificates", certificates_path %>
+
+  <%= button_to "Destroy this certificate", @certificate, method: :delete %>
+</div>

@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_03_211037) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_06_135951) do
+  create_table "certificates", force: :cascade do |t|
+    t.integer "certificateNumber"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "investigators", force: :cascade do |t|
     t.string "idCard"
     t.string "name"
