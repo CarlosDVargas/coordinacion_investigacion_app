@@ -1,0 +1,32 @@
+<%= form_with(model: article) do |form| %>
+  <% if article.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+      <ul>
+        <% article.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :articleNumber, style: "display: block" %>
+    <%= form.number_field :articleNumber %>
+  </div>
+
+  <div>
+    <%= form.label :certificateNumber, style: "display: block" %>
+    <%= form.number_field :certificateNumber %>
+  </div>
+
+  <div>
+    <%= form.label :researchCode, style: "display: block" %>
+    <%= form.text_field :researchCode %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
